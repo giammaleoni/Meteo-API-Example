@@ -1,0 +1,35 @@
+<ion-view view-title="Playlists">
+  <ion-content>
+    <!-- <ion-item><ion-google-place placeholder="Enter an address, Apt# and ZIP" ng-model="location" current-location="true" /></ion-item> -->
+    <div class="item item-thumbnail-left">
+    <img src="http://openweathermap.org/img/w/{{data.list[0].weather[0].icon}}.png">
+    <h2>{{data.city.name}}, {{data.city.country}}</h2>
+    <h3>{{data.list[0].main.temp}}°</h3>
+    <p>Min: {{data.list[0].main.temp_min}}°</p>
+    <p>Max: {{data.list[0].main.temp_max}}°</p>
+    <p>Humidity: {{data.list[0].main.humidity}}%</p>
+  </div>
+    <ion-list>
+      <div ng-repeat="w in weather">
+        <ion-item class="item-stable cap"
+                  ng-click="toggleGroup(w)"
+                  ng-class="{active: isGroupShown(w)}">
+              <i class="icon" ng-class="isGroupShown(w) ? 'ion-minus' : 'ion-plus'"></i>
+              {{w.data | date:'EEEE dd MMMM yyyy'}}
+        </ion-item>
+        <ion-item ng-repeat="h in w.detail"
+                  class="item-accordion item-icon-right"
+                  ng-repeat="item in group.items"
+                  ng-show="isGroupShown(w)">
+          {{h.dt_txt | limitTo:5:11}}
+
+          <p>
+            {{h.weather[0].description}}
+          </p>
+          <i class="icon"><img src="http://openweathermap.org/img/w/{{h.weather[0].icon}}.png"></img></i>
+        </ion-item>
+      </div>
+    </ion-list>
+
+  </ion-content>
+</ion-view>
